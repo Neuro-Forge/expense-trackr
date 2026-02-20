@@ -1,0 +1,28 @@
+/* layout for app container */
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.filter-bar select {
+  margin-left: 0.5rem;
+  padding: 0.25rem;
+}
+
+.total {
+  font-weight: bold;
+  margin-left: auto;
+}

@@ -1,0 +1,64 @@
+/* styling for expense list */
+.expense-list-container {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.expense-list-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.expense-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eee;
+  animation: fadeIn 0.4s ease;
+}
+
+.expense-item:last-child {
+  border-bottom: none;
+}
+
+.expense-info {
+  flex-grow: 1;
+}
+
+.expense-actions button {
+  margin-left: 0.5rem;
+  background: #6c757d;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.expense-actions button:hover {
+  background: #5a6268;
+}
+
+.expense-actions .delete {
+  background: #dc3545;
+}
+
+.expense-actions .delete:hover {
+  background: #bb2d3b;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
