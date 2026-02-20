@@ -8,7 +8,7 @@ const initialexpense = {
   date: "",
 };
 
-export default function ExpenseForm({ editingExpense, onSubmit }) {
+export default function ExpenseForm({ editingExpense, onSubmit, onCancel }) {
   const [expense, setExpense] = useState(initialexpense);
 
   useEffect(() => {
@@ -29,49 +29,85 @@ export default function ExpenseForm({ editingExpense, onSubmit }) {
     setExpense(initialexpense);
   };
 
+  const handleCancel = () => {
+    setExpense(initialexpense);
+    if (onCancel) {
+      onCancel();
+    }
+  };
+
   return (
-    <div className="expense-form-container">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          required
-          placeholder="Description"
-          value={expense.description}
-          onChange={handleChange("description")}
-        />
-        <select
-          required
-          value={expense.category}
-          onChange={handleChange("category")}
+    <form className="expense-form" onSubmit={handleSubmit}>
+      <h2>{editingExpense ? "Edit expense" : "Add expense"}</h2>
+
+      <div className="form-row">
+        <label>
+          Description
+          <input
+            type="text"
+            required
+            placeholder="Description"
+            value={expense.description}
+            onChange={handleChange("description")}
+          />
+        </label>
+
+        <label>
+          Amount
+          <input
+            type="number"
+            required
+            placeholder="Amount"
+            value={expense.amount}
+            onChange={handleChange("amount")}
+            step="0.01"
+            min="0"
+          />
+        </label>
+      </div>
+
+      <div className="form-row">
+        <label>
+          Category
+          <select
+            required
+            value={expense.category}
+            onChange={handleChange("category")}
+          >
+            <option value="" disabled>
+              Category
+            </option>
+            <option value="food">food</option>
+            <option value="transportation">transportation</option>
+            <option value="entertainment">entertainment</option>
+            <option value="utilities">utilities</option>
+            <option value="other">other</option>
+          </select>
+        </label>
+
+        <label>
+          Date
+          <input
+            type="date"
+            required
+            value={expense.date}
+            onChange={handleChange("date")}
+          />
+        </label>
+      </div>
+
+      <div className="form-actions">
+        <button
+          type="button"
+          className="btn-secondary"
+          onClick={handleCancel}
         >
-          <option value="" disabled>
-            Category
-          </option>
-          <option value="food">food</option>
-          <option value="transportation">transportation</option>
-          <option value="entertainment">entertainment</option>
-          <option value="utilities">utilities</option>
-          <option value="other">other</option>
-        </select>
-        <input
-          type="number"
-          required
-          placeholder="Amount"
-          value={expense.amount}
-          onChange={handleChange("amount")}
-          step="0.01"
-          min="0"
-        />
-        <input
-          type="date"
-          required
-          value={expense.date}
-          onChange={handleChange("date")}
-        />
-        <button type="submit">
+          Cancel
+        </button>
+        <button type="submit" className="btn-primary">
           {editingExpense ? "Update" : "Add Expense"}
         </button>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }

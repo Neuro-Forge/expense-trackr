@@ -7,7 +7,6 @@ import Dashboard from './components/dashboard';
 
 import './css/App.css';
 
-
 function App() {
   const [expenses, setExpenses] = useLocalStorage('expenses', []);
   const [editingExpense, setEditingExpense] = useState(null);
@@ -67,50 +66,58 @@ function App() {
 
   return (
     <div className="app-container">
-      <header className="header">
-        <h1>Expense Tracker</h1>
-      </header>
+      {/* Top bar with title + nav all together */}
+      <div className="top-bar">
+        <header className="header">
+          <h1>Expense Tracker</h1>
+        </header>
 
-      {/* Navigation bar */}
-      <nav className="nav-bar">
-        <button
-          className={activeView === 'dashboard' ? 'nav-btn active' : 'nav-btn'}
-          onClick={() => setActiveView('dashboard')}
-        >
-          Dashboard
-        </button>
-        <button
-          className={activeView === 'family' ? 'nav-btn active' : 'nav-btn'}
-          onClick={() => setActiveView('family')}
-        >
-          Family
-        </button>
-        <button
-          className={activeView === 'view' ? 'nav-btn active' : 'nav-btn'}
-          onClick={() => setActiveView('view')}
-        >
-          View Expenses
-        </button>
+        <nav className="nav-bar">
+          <button
+            className={activeView === 'dashboard' ? 'nav-btn active' : 'nav-btn'}
+            onClick={() => setActiveView('dashboard')}
+          >
+            Dashboard
+          </button>
+          <button
+            className={activeView === 'family' ? 'nav-btn active' : 'nav-btn'}
+            onClick={() => setActiveView('family')}
+          >
+            Family
+          </button>
+          <button
+            className={activeView === 'view' ? 'nav-btn active' : 'nav-btn'}
+            onClick={() => setActiveView('view')}
+          >
+            View Expenses
+          </button>
 
-        <button className="nav-btn primary" onClick={handleAddClick}>
-          Add Expense
-        </button>
-      </nav>
+          <button className="nav-btn primary" onClick={handleAddClick}>
+            Add Expense
+          </button>
+        </nav>
+      </div>
 
       {/* Dashboard view */}
       {activeView === 'dashboard' && <Dashboard expenses={expenses} />}
 
       {/* Add / Edit Expense form – only when user wants */}
       {showForm && (
-        <ExpenseForm
-          editingExpense={editingExpense}
-          onSubmit={(expense) => {
-            handleSubmit(expense);
-            setShowForm(false); // hide after save
-          }}
-        />
-      )}
-
+  <ExpenseForm
+    editingExpense={editingExpense}
+    onSubmit={(expense) => {
+      handleSubmit(expense);
+      setShowForm(false);        // hide form after save
+      setEditingExpense(null);
+      setActiveView('dashboard'); // go to dashboard after save
+    }}
+    onCancel={() => {
+      setShowForm(false);        // hide form on cancel
+      setEditingExpense(null);
+      setActiveView('dashboard'); // go to dashboard on cancel
+    }}
+  />
+)}
       {/* Filters + list for View / Family views */}
       {(activeView === 'view' || activeView === 'family') && (
         <>

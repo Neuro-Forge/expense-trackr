@@ -1,0 +1,126 @@
+.month-calendar {
+  margin-top: 18px;
+  padding: 14px 16px 16px;
+  border-radius: 16px;
+  background: radial-gradient(circle at top left, #020617, #020617 60%, #000000);
+  box-shadow:
+    0 10px 26px rgba(15, 23, 42, 0.9),
+    0 0 0 1px rgba(148, 163, 184, 0.22);
+  color: #e5e7eb;
+}
+
+/* Header with month name & legend */
+.month-calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.month-calendar-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #cbd5f5;
+}
+
+.calendar-legend {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.78rem;
+  color: #9ca3af;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-box {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+}
+
+.legend-low {
+  background: #f97316; /* orange */
+}
+
+.legend-high {
+  background: #ef4444; /* red */
+}
+
+/* Grid */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(32px, 1fr));
+  gap: 4px;
+}
+
+/* Weekday headers */
+.calendar-weekday {
+  font-size: 0.75rem;
+  text-align: center;
+  color: #9ca3af;
+  padding-bottom: 4px;
+}
+
+/* Day cells */
+.calendar-day {
+  position: relative;
+  min-height: 34px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 4px 5px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(31, 41, 55, 0.9);
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.9);
+}
+
+.calendar-day.blank {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* Day states */
+.calendar-day.empty {
+  opacity: 0.65;
+}
+
+.calendar-day.low {
+  background: radial-gradient(circle at top left, rgba(249, 115, 22, 0.25), #020617);
+  border-color: rgba(249, 115, 22, 0.7);
+}
+
+.calendar-day.high {
+  background: radial-gradient(circle at top left, rgba(239, 68, 68, 0.3), #020617);
+  border-color: rgba(248, 113, 113, 0.85);
+}
+
+/* Day number & total */
+.day-number {
+  font-size: 0.72rem;
+  color: #e5e7eb;
+}
+
+.day-total {
+  margin-top: 2px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #f97316; /* default orange text */
+}
+
+.calendar-day.high .day-total {
+  color: #fecaca; /* lighter text on red */
+}
+
+/* Tooltip-like title will show full total on hover (native browser) */
