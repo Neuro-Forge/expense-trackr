@@ -1,28 +1,33 @@
-/* layout for app container */
-.app-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.filter-bar {
+.nav-bar {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
 }
 
-.filter-bar select {
-  margin-left: 0.5rem;
-  padding: 0.25rem;
+.nav-btn {
+  padding: 0.4rem 0.9rem;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  cursor: pointer;
 }
 
-.total {
-  font-weight: bold;
+.nav-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+.nav-btn.primary {
   margin-left: auto;
+  background: #16a34a;
+  color: #ffffff;
+  border-color: #16a34a;
+}
+
+.app-container {
+  min-height: 100vh;
+  background: #f3f4f6;
+  padding: 1.5rem;
 }
