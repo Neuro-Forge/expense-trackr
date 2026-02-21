@@ -29,7 +29,7 @@ const startOfYear = (d) => {
 };
 
 const Dashboard = ({ expenses }) => {
-  const [range, setRange] = useState('month'); // 'week' | 'month' | 'year'
+  const [range, setRange] = useState('month'); 
   const now = new Date();
 
   const stats = useMemo(() => {
@@ -84,17 +84,7 @@ const Dashboard = ({ expenses }) => {
     <section className="dashboard">
       <div className="dashboard-header">
         <h2>Overview</h2>
-        <div className="dashboard-range">
-          <span>Show:</span>
-          <select
-            value={range}
-            onChange={(e) => setRange(e.target.value)}
-          >
-            <option value="week">This week</option>
-            <option value="month">This month</option>
-            <option value="year">This year</option>
-          </select>
-        </div>
+        
       </div>
 
       <div className="dashboard-grid">
