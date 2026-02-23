@@ -6,6 +6,7 @@ const initialexpense = {
   category: "",
   amount: "",
   date: "",
+  billDataUrl: "",
 };
 
 export default function ExpenseForm({ editingExpense, onSubmit, onCancel }) {
@@ -21,6 +22,17 @@ export default function ExpenseForm({ editingExpense, onSubmit, onCancel }) {
 
   const handleChange = (field) => (e) => {
     setExpense({ ...expense, [field]: e.target.value });
+  };
+
+const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setExpense({ ...expense, billDataUrl: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -94,7 +106,23 @@ export default function ExpenseForm({ editingExpense, onSubmit, onCancel }) {
             onChange={handleChange("date")}
           />
         </label>
+
+        <label>
+          Bill Image
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+        </label>
       </div>
+
+      {expense.billDataUrl && (
+        <div className="bill-preview">
+          <p>Bill Preview:</p>
+          <img src={expense.billDataUrl} alt="Bill preview" />
+        </div>
+      )}
 
       <div className="form-actions">
         <button

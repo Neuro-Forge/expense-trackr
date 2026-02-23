@@ -113,3 +113,24 @@
     width: 100%;
   }
 }
+
+/* ===== Bill Preview ===== */
+.bill-preview {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.bill-preview p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.bill-preview img {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}

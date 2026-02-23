@@ -4,6 +4,7 @@ import ExpenseForm from './components/ExpenseForm';
 import ExpenseList from './components/ExpenseList';
 import useLocalStorage from './hooks/useLocalStorage';
 import Dashboard from './components/dashboard';
+import Family from './components/family';
 
 import './css/App.css';
 
@@ -11,17 +12,22 @@ function App() {
   const [expenses, setExpenses] = useLocalStorage('expenses', []);
   const [editingExpense, setEditingExpense] = useState(null);
   const [filterCategory, setFilterCategory] = useState('');
-  const [activeView, setActiveView] = useState('dashboard'); // 'dashboard' | 'family' | 'view'
+  const [activeView, setActiveView] = useState('dashboard'); // 'dashboard' | 'family' | 'view' | 'family-add'
   const [showForm, setShowForm] = useState(false);
 
-  const handleSubmit = (expense) => {
+  const handleSubmit = (expense, isFamilyExpense = false) => {
+    const expenseWithFamily = {
+      ...expense,
+      isFamily: isFamilyExpense || expense.isFamily || false
+    };
+    
     if (expense.id) {
       setExpenses((prev) =>
-        prev.map((e) => (e.id === expense.id ? expense : e))
+        prev.map((e) => (e.id === expense.id ? expenseWithFamily : e))
       );
       setEditingExpense(null);
     } else {
-      setExpenses((prev) => [...prev, { ...expense, id: Date.now() }]);
+      setExpenses((prev) => [...prev, { ...expenseWithFamily, id: Date.now() }]);
     }
   };
 
@@ -64,6 +70,13 @@ function App() {
     0
   );
 
+  // Handle adding expense from family view
+  const handleAddFromFamily = () => {
+    setEditingExpense(null);
+    setShowForm(true);
+    setActiveView('family-add');
+  };
+
   return (
     <div className="app-container">
       {/* Top bar with title + nav all together */}
@@ -101,25 +114,46 @@ function App() {
       {/* Dashboard view */}
       {activeView === 'dashboard' && <Dashboard expenses={expenses} />}
 
+      {/* Family view */}
+      {activeView === 'family' && (
+        <Family 
+          expenses={expenses} 
+          onAddExpense={handleAddFromFamily}
+        />
+      )}
+
       {/* Add / Edit Expense form – only when user wants */}
       {showForm && (
-  <ExpenseForm
-    editingExpense={editingExpense}
-    onSubmit={(expense) => {
-      handleSubmit(expense);
-      setShowForm(false);        // hide form after save
-      setEditingExpense(null);
-      setActiveView('dashboard'); // go to dashboard after save
-    }}
-    onCancel={() => {
-      setShowForm(false);        // hide form on cancel
-      setEditingExpense(null);
-      setActiveView('dashboard'); // go to dashboard on cancel
-    }}
-  />
-)}
+        <ExpenseForm
+          editingExpense={editingExpense}
+          onSubmit={(expense) => {
+            // If we're in family-add mode, mark as family expense
+            if (activeView === 'family-add') {
+              handleSubmit(expense, true);
+              setShowForm(false);
+              setEditingExpense(null);
+              setActiveView('family');
+            } else {
+              handleSubmit(expense);
+              setShowForm(false);
+              setEditingExpense(null);
+              setActiveView('dashboard');
+            }
+          }}
+          onCancel={() => {
+            setShowForm(false);
+            setEditingExpense(null);
+            if (activeView === 'family-add') {
+              setActiveView('family');
+            } else {
+              setActiveView('dashboard');
+            }
+          }}
+        />
+      )}
+      
       {/* Filters + list for View / Family views */}
-      {(activeView === 'view' || activeView === 'family') && (
+      {(activeView === 'view' || activeView === 'family-add') && (
         <>
           <div className="filter-bar">
             <label>
